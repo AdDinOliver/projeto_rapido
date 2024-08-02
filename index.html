@@ -1,374 +1,1597 @@
 <!DOCTYPE html>
-<html>
-
+<html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Sabores Lanchonete e Pizzaria</title>
-  <link rel="stylesheet" href="style.css">
-  
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@300&display=swap" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tabela 5x5</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: #1c1c1c;
+            color: #e0e0e0;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+        }
 
+        #form-container {
+            margin-bottom: 20px;
+            text-align: center;
+        }
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Caprasimo&family=Josefin+Sans:ital,wght@0,100;0,700;1,700&display=swap" rel="stylesheet">
-  
+        .input-group {
+            margin-bottom: 15px;
+        }
+
+        .input-group label {
+            font-size: 18px;
+            color: #e0e0e0;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .input-group input, .input-group button {
+            padding: 12px;
+            font-size: 16px;
+            border-radius: 5px;
+            border: none;
+            width: 220px;
+            margin: 5px;
+        }
+
+        .input-group input {
+            background-color: #333;
+            color: #e0e0e0;
+        }
+
+        .input-group input:focus {
+            background-color: #444;
+            outline: none;
+        }
+
+        .input-group button {
+            background-color: #e74c3c;
+            color: #fff;
+            cursor: pointer;
+        }
+
+        .input-group button:hover {
+            background-color: #c0392b;
+        }
+
+        .input-group button:active {
+            background-color: #e74c3c;
+        }
+
+        #selected-numbers {
+            margin-top: 20px;
+            font-size: 18px;
+            color: #e0e0e0;
+            text-align: center;
+        }
+
+        table {
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: #333;
+            border-radius: 10px;
+            box-shadow: 0 6px 12px rgba(0,0,0,0.5);
+            width: 500px;
+            table-layout: fixed;
+        }
+
+        td {
+            border: 1px solid #444;
+            width: 20%;
+            height: 80px;
+            text-align: center;
+            vertical-align: middle;
+            cursor: pointer;
+            position: relative;
+            background-color: #2c3e50;
+            transition: background-color 0.3s, color 0.3s;
+            border-radius: 8px;
+        }
+
+        td.selected {
+            border: 2px solid gold;
+        }
+
+        td.green {
+            background-color: #27ae60 !important;
+        }
+
+        td.blue {
+            background-color: #2980b9 !important;
+        }
+
+        td.orange {
+            background-color: #f39c12 !important;
+        }
+
+        td.red {
+            background-color: #c0392b !important;
+        }
+
+        td.black {
+            background-color: #34495e !important;
+            color: #ecf0f1 !important;
+        }
+
+        .corner-value {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            font-size: 16px;
+            background-color: #000;
+            color: #e0e0e0;
+            padding: 4px 8px;
+            border-radius: 5px;
+            box-shadow: 0 0 5px rgba(0,0,0,0.5);
+        }
+
+        .message {
+            font-size: 14px;
+            background-color: #000;
+            color: #e0e0e0;
+            position: absolute;
+            bottom: 5px;
+            right: 5px;
+            padding: 4px 8px;
+            border-radius: 5px;
+            box-shadow: 0 0 5px rgba(0,0,0,0.5);
+        }
+
+        #round-counter {
+            margin-top: 20px;
+            font-size: 22px;
+            font-weight: bold;
+            color: #e0e0e0;
+            text-align: center;
+        }
+
+        @media (max-width: 600px) {
+            table, td {
+                width: 100%;
+                height: 60px;
+            }
+
+            .input-group input, .input-group button {
+                font-size: 14px;
+                padding: 10px;
+                width: 180px;
+            }
+
+            #selected-numbers {
+                font-size: 16px;
+            }
+        }
+    </style>
 </head>
-
 <body>
-  <header class="cabecalho">
-    <h1 class="titulo-principal">Sabores
-    </h1>
-    <h2 class="titulo-secundario">Lanchonete e Pizzaria</h2>
-    <div class="logo">
-      
-      <img class="imagem-logo" src="img/logo.jpg" alt="" />
-    
+    <div id="form-container">
+        <div class="input-group">
+            <label for="player-name">Nome:</label>
+            <input type="text" id="player-name" placeholder="Digite seu nome" required>
+        </div>
+        <button id="start-button">Iniciar Rodadas</button>
     </div>
-    
-    <!--<h1 class="titulo-principal">NomeDoNegocio</h1>-->
-    
-    <label class="lab-menu" for="check-menu">Menu</label>
-    <input type="checkbox" class="check-menu" name="check-menu" id="check-menu">
-    
-    <nav class="menu-principal" id="menu-principal">
-      <ul class="ul-menu">
-        <li class="li-menu"><a class="link-menu" href="#">Início</a></li>
-        <li class="li-menu"><a class="link-menu" href="#">Destaques</a></li>
-        <li class="li-menu"><a class="link-menu" href="#">Favoritos</a></li>
-        <li class="li-menu"><a class="link-menu" href="#">Sobre</a></li>
-      </ul>
-    </nav>
-    
-  </header>
-  
-  <main class="conteudo">
-    <section class="bloco b-banner">
-      <img class="banner-principal" src="img/img1.jpg" alt="" />
-      
-    </section>
-    <section class="bloco slider">
-      <input id="radio01" name='slide' type="radio">
-      <input id="radio02" name='slide' type="radio" checked>
-      <input id="radio03" name='slide' type="radio">
-      <input id="radio04" name='slide' type="radio">
-      
-      <div class="grupo-labs">
-       
-      <label class="labs" for="radio01"></label>
-      <label class="labs" for="radio02"></label>
-      <label class="labs" for="radio03"></label>
-      <label class="labs" for="radio04"></label>
-      </div>
-    
-      <div class="slider-content">
-        <div class="slider-item" id="slide1">
-          <img class="img-slider" src="img/pizza.png" alt="" />
-        </div>
-        <div class="slider-item" id="slide2">
-          <img class="img-slider" src="img/hamburguer.png" alt="" />
-        </div>
-        <div class="slider-item" id="slide3">
-          <img class="img-slider" src="img/acai.png" alt="" />
-        </div>
-        <div class="slider-item" id="slide4">
-          <img class="img-slider" src="img/logo.jpg" alt="" />
-        </div>
-      </div>
-    </section>
-    
-    <section class="bloco grupo-categ">
-      <div class="categ">
-        <a class="link-categ" href="https://www.instagram.com">
-          <img class="img-categ" src="img/pizza.png" alt="imagem" />
-        </a>
-          <p class="nome-categ">categ</p>
-          
-      </div>
-      <div class="categ">
-        <a class="link-categ" href="https://www.instagram.com">
-          <img class="img-categ" src="img/hamburguer.png" alt="imagem" />
-        </a>
-          <p class="nome-categ">categ</p>
-          
-      </div>
-      <div class="categ">
-        
-        <a class="link-categ" href="https://www.instagram.com">
-          <img class="img-categ" src="img/acai.png" alt="imagem" />
-        </a>
-          <p class="nome-categ">categ</p>
-          
-      </div>
-      <div class="categ">
-        <a class="link-categ" href="https://www.instagram.com">
-          <img class="img-categ" src="img/logo.jpg" alt="imagem" />
-        </a>
-          <p class="nome-categ">categ</p>
-          
-      </div>
-    </section>
-    
-    <section class="bloco b-catalogo">
-      <h2 class="titulo-bloco">Nossos produtos </h2>
-          <section class="catalogo">
-            <section class="card">
-             <img class="img-prod" src="img/img1.jpg" alt="imagem-produto" />
-             <p class="nome-prod">Nome do produto com detalhes</br><span class="preco">R$ 13,00</span></p>
-             <p class="detalhe-prod">Texto detalhando o produto e ingredientes e observações</p>
-             <a class="botao-comprar" href="#">Pedir</a>
-            </section>
-            
-            <section class="card">
-             <img class="img-prod" src="img/img1.jpg" alt="imagem-produto" />
-             <p class="nome-prod">Nome do produto</br><br><span class="preco">R$ 13,00</span></p>
-             <p class="detalhe-prod">Texto detalhando o produto e ingredientes e observações</p>
-             <a class="botao-comprar" href="#">Pedir</a>
-            </section>
-            <section class="card">
-              <img class="img-prod" src="img/img1.jpg" alt="imagem-produto" />
-              <p class="nome-prod">Nome do produto com detalhes</br><span class="preco">R$ 13,00</span></p>
-              <p class="detalhe-prod">Texto detalhando o produto e ingredientes e observações</p>
-              <a class="botao-comprar" href="#">Pedir</a>
-            </section>
-            
-            <section class="card">
-              <img class="img-prod" src="img/img1.jpg" alt="imagem-produto" />
-              <p class="nome-prod">Nome do produto com detalhes</br><span class="preco">R$ 13,00</span></p>
-              <p class="detalhe-prod">Texto detalhando o produto e ingredientes e observações</p>
-              <a class="botao-comprar" href="#">Pedir</a>
-            </section>
-            
-            <section class="card">
-              <img class="img-prod" src="img/img1.jpg" alt="imagem-produto" />
-              <p class="nome-prod">Nome do produto com detalhes</br><span class="preco">R$ 13,00</span></p>
-              <p class="detalhe-prod">Texto detalhando o produto e ingredientes e observações</p>
-              <a class="botao-comprar" href="#">Pedir</a>
-            </section>
-            
-            <section class="card">
-              <img class="img-prod" src="img/img1.jpg" alt="imagem-produto" />
-              <p class="nome-prod">Nome do produto</br><br><span class="preco">R$ 13,00</span></p>
-              <p class="detalhe-prod">Texto detalhando o produto e ingredientes e observações</p>
-              <a class="botao-comprar" href="#">Pedir</a>
-            </section>
-            <section class="card">
-              <img class="img-prod" src="img/img1.jpg" alt="imagem-produto" />
-              <p class="nome-prod">Nome do produto com detalhes</br><span class="preco">R$ 13,00</span></p>
-              <p class="detalhe-prod">Texto detalhando o produto e ingredientes e observações</p>
-              <a class="botao-comprar" href="#">Pedir</a>
-            </section>
-            
-            <section class="card">
-              <img class="img-prod" src="img/img1.jpg" alt="imagem-produto" />
-              <p class="nome-prod">Nome do produto com detalhes</br><span class="preco">R$ 13,00</span></p>
-              <p class="detalhe-prod">Texto detalhando o produto e ingredientes e observações</p>
-              <a class="botao-comprar" href="#">Pedir</a>
-            </section>
-            
-            <section class="card">
-             <img class="img-prod" src="img/img1.jpg" alt="imagem-produto" />
-             <p class="nome-prod">Nome do produto com detalhes</br><span class="preco">R$ 13,00</span></p>
-             <p class="detalhe-prod">Texto detalhando o produto e ingredientes e observações</p>
-             <a class="botao-comprar" href="#">Pedir</a>
-            </section>
-            
-            <section class="card">
-             <img class="img-prod" src="img/img1.jpg" alt="imagem-produto" />
-             <p class="nome-prod">Nome do produto</br><br><span class="preco">R$ 13,00</span></p>
-             <p class="detalhe-prod">Texto detalhando o produto e ingredientes e observações</p>
-             <a class="botao-comprar" href="#">Pedir</a>
-            </section>
-            <section class="card">
-              <img class="img-prod" src="img/img1.jpg" alt="imagem-produto" />
-              <p class="nome-prod">Nome do produto com detalhes</br><span class="preco">R$ 13,00</span></p>
-              <p class="detalhe-prod">Texto detalhando o produto e ingredientes e observações</p>
-              <a class="botao-comprar" href="#">Pedir</a>
-            </section>
-            
-            <section class="card">
-              <img class="img-prod" src="img/img1.jpg" alt="imagem-produto" />
-              <p class="nome-prod">Nome do produto com detalhes</br><span class="preco">R$ 13,00</span></p>
-              <p class="detalhe-prod">Texto detalhando o produto e ingredientes e observações</p>
-              <a class="botao-comprar" href="#">Pedir</a>
-            </section>
-            
-            <section class="card">
-              <img class="img-prod" src="img/img1.jpg" alt="imagem-produto" />
-              <p class="nome-prod">Nome do produto com detalhes</br><span class="preco">R$ 13,00</span></p>
-              <p class="detalhe-prod">Texto detalhando o produto e ingredientes e observações</p>
-              <a class="botao-comprar" href="#">Pedir</a>
-            </section>
-            
-            <section class="card">
-              <img class="img-prod" src="img/img1.jpg" alt="imagem-produto" />
-              <p class="nome-prod">Nome do produto</br><br><span class="preco">R$ 13,00</span></p>
-              <p class="detalhe-prod">Texto detalhando o produto e ingredientes e observações</p>
-              <a class="botao-comprar" href="#">Pedir</a>
-            </section>
-            <section class="card">
-              <img class="img-prod" src="img/img1.jpg" alt="imagem-produto" />
-              <p class="nome-prod">Nome do produto com detalhes</br><span class="preco">R$ 13,00</span></p>
-              <p class="detalhe-prod">Texto detalhando o produto e ingredientes e observações</p>
-              <a class="botao-comprar" href="#">Pedir</a>
-            </section>
-            
-            <section class="card">
-              <img class="img-prod" src="img/img1.jpg" alt="imagem-produto" />
-              <p class="nome-prod">Nome do produto com detalhes</br><span class="preco">R$ 13,00</span></p>
-              <p class="detalhe-prod">Texto detalhando o produto e ingredientes e observações</p>
-              <a class="botao-comprar" href="#">Pedir</a>
-            </section>
-            
-            <section class="card">
-              <img class="img-prod" src="img/img1.jpg" alt="imagem-produto" />
-              <p class="nome-prod">Nome do produto com detalhes</br><span class="preco">R$ 13,00</span></p>
-              <p class="detalhe-prod">Texto detalhando o produto e ingredientes e observações</p>
-              <a class="botao-comprar" href="#">Pedir</a>
-            </section>
-            
-            <section class="card">
-              <img class="img-prod" src="img/img1.jpg" alt="imagem-produto" />
-              <p class="nome-prod">Nome do produto</br><br><span class="preco">R$ 13,00</span></p>
-              <p class="detalhe-prod">Texto detalhando o produto e ingredientes e observações</p>
-              <a class="botao-comprar" href="#">Pedir</a>
-            </section>
-            <section class="card">
-              <img class="img-prod" src="img/img1.jpg" alt="imagem-produto" />
-              <p class="nome-prod">Nome do produto com detalhes</br><span class="preco">R$ 13,00</span></p>
-              <p class="detalhe-prod">Texto detalhando o produto e ingredientes e observações</p>
-              <a class="botao-comprar" href="#">Pedir</a>
-            </section>
-            
-            <section class="card">
-              <img class="img-prod" src="img/img1.jpg" alt="imagem-produto" />
-              <p class="nome-prod">Nome do produto com detalhes</br><span class="preco">R$ 13,00</span></p>
-              <p class="detalhe-prod">Texto detalhando o produto e ingredientes e observações</p>
-              <a class="botao-comprar" href="#">Pedir</a>
-            </section>
-            
-          </section><!--catalogo-->
-    </section><!--b-catalogo-->
-    
-    <section class="bloco b-destaques">
-      <h2 class="titulo-bloco">Titulo do segundo bloco</h2>
-      <section class="destaques">
-        
-       <input type="radio" name="radio" id="radio1" checked>
-        <label class="lab-radio lr1" for="radio1">
-          <img class="img-lab" src="img/pizza.png" alt="imagem-produto" />
-          </label>
-        <div class="card-dest" id="card-dest1">
-          <img class="img-dest" src="img/pizza.png" alt="">
-        </div>
-        
-        <input type="radio" name="radio" id="radio2">
-        <label class="lab-radio lr2" for="radio2">
-          <img class="img-lab" src="img/hamburguer.png" alt="imagem-produto" />
-        </label>
-        <div class="card-dest" id="card-dest2">
-          <img class="img-dest" src="img/hamburguer.png" alt="">
-        </div>
-        
-        <input type="radio" name="radio" id="radio3">
-        <label class="lab-radio lr3" for="radio3">
-          <img class="img-lab" src="img/acai.png" alt="imagem-produto" />
-        </label>
-        <div class="card-dest" id="card-dest3">
-          <img class="img-dest" src="img/acai.png" alt="">
-        </div>
-        
-        <input type="radio" name="radio" id="radio4">
-        <label class="lab-radio lr4" for="radio4">
-          <img class="img-lab" src="img/logo.jpg" alt="imagem-produto" />
-        </label>
-        <div class="card-dest" id="card-dest4">
-          <img class="img-dest" src="img/logo.jpg" alt="">
-        </div>
-        
-      </section>
-    </section><!--catalogo-->
-    <section class="bloco">
-      <h2 class="titulo-bloco">Titulo do terceiro bloco</h2>
-      
-      <div class="list-prod">
-        <div class="card-list">
-          <img class="img-list" src="img/pizza.png" alt="" />
-          <p class="nome-list">Nome do produto</p>
-          <p class="sub-list">
-            Subtítulo da lista lista
-            Subtítulo da lista
-          </p>
-          <div class="etiqueta">
-            ⭐⭐⭐⭐⭐
-          </div>
-          
-        </div>
-        <div class="card-list">
-          <img class="img-list" src="img/hamburguer.png" alt="" />
-          <p class="nome-list">Nome do produto</p>
-          <p class="sub-list">
-            Subtítulo da lista lista
-            Subtítulo da lista
-          </p>
-          <div class="etiqueta">
-            ⭐⭐⭐⭐⭐
-          </div>
-        </div>
-        
-        <div class="card-list">
-          <img class="img-list" src="img/acai.png" alt="" />
-          <p class="nome-list">Nome do produto</p>
-          <p class="sub-list">
-            Subtítulo da lista lista
-            Subtítulo da lista
-          </p>
-          <div class="etiqueta">
-            ⭐⭐⭐⭐⭐
-          </div>
-        </div>
-        
-        <div class="card-list">
-          <img class="img-list" src="img/logo.jpg" alt="" />
-          <p class="nome-list">Nome do produto</p>
-          <p class="sub-list">
-            Subtítulo da lista lista
-            Subtítulo da lista
-          </p>
-          <div class="etiqueta">
-            ⭐⭐⭐⭐⭐
-          </div>
-        </div>
-      </div>
-   
-    </section>
-    <section class="bloco local">
-      <h2 class="titulo-bloco">
-        Nossa Localização 
-      </h2>
-      <div class="mapa">
-        <iframe class="loc" src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d3980.678773341122!2d-38.62468!3d-3.8788799999999997!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1spt-BR!2sbr!4v1684595695859!5m2!1spt-BR!2sbr" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-      </div>
-    </section>
-  </main>
-  
-  <footer class="rodape">
-    <section class="redes">
-      <a class="link-redes lredes1" href="">
-        <img class="img-redes" src="img/whats.jpg" alt="" />
-        Whatsapp</a>
-      <a class="link-redes lredes2" href="">
-        <img class="img-redes" src="img/insta.jpg" alt="" />
-        Instagram</a>
-      <a class="link-redes lredes3" href="https://www.facebook.com">
-        <img class="img-redes" src="img/face.jpg" alt="" />
-        Facebook</a>
-    </section>
-    <h6 class="copy">© copyright - 2023 | Nome do negócio.</h6>
-  </footer>
-</body>
 
-</html>
+    <div id="selected-numbers">Números Selecionados: <span id="selected-list">Nenhum</span></div>
+
+    <table>
+        <tbody>
+            <!-- Linhas da tabela serão geradas pelo JavaScript -->
+        </tbody>
+    </table>
+
+    <div id="round-counter">Rodada: 1</div>
+
+    <script>
+  // Função para criar e atualizar a tabela 5x5
+  function initializeTable() {
+    const tableBody = document.querySelector('tbody');
+    let number = 1;
+
+    for (let i = 0; i < 5; i++) {
+      const row = document.createElement('tr');
+      for (let j = 0; j < 5; j++) {
+        const cell = document.createElement('td');
+        cell.innerHTML = `${number}<div class="corner-value">0</div>`;
+        cell.dataset.number = number;
+        cell.dataset.value = 0; // Inicializa o valor da célula
+        row.appendChild(cell);
+        number++;
+      }
+      tableBody.appendChild(row);
+    }
+  }
+
+  initializeTable();
+
+  let selectedNumbers = [];
+  const totalRounds = 10;
+  let currentRound = 1;
+  let playerName = '';
+  let blackColorApplied = false;
+  const interval = 5000; // 5 segundos
+
+  function getRandomIndexes(count, max) {
+    const indexes = [];
+    while (indexes.length < count) {
+      const rand = Math.floor(Math.random() * max);
+      if (!indexes.includes(rand)) indexes.push(rand);
+    }
+    return indexes;
+  }
+
+  function applyColors() {
+    const cells = Array.from(document.querySelectorAll('td'));
+    const totalCells = cells.length;
+    const cellsToColor = 14;
+
+    const colorCounts = {
+      green: 2,
+      blue: 3,
+      orange: 4,
+      red: 5,
+      black: blackColorApplied ? 0 : 1
+    };
+
+    const shuffledIndexes = getRandomIndexes(cellsToColor, totalCells);
+
+    // Limpar cores e mensagens
+    cells.forEach(cell => {
+      cell.classList.remove('green', 'blue', 'orange', 'red', 'black');
+      const messageDiv = cell.querySelector('.message');
+      if (messageDiv) {
+        messageDiv.remove();
+      }
+    });
+
+    let index = 0;
+    Object.entries(colorCounts).forEach(([color, count]) => {
+      for (let i = 0; i < count; i++) {
+        if (index >= shuffledIndexes.length) return;
+        const cell = cells[shuffledIndexes[index++]];
+        cell.classList.add(color);
+
+        let currentValue = parseInt(cell.dataset.value, 10);
+        let newValue;
+
+        switch (color) {
+          case 'green':
+            newValue = currentValue + 3;
+            break;
+          case 'blue':
+            newValue = currentValue + 2;
+            break;
+          case 'orange':
+            newValue = currentValue + 1;
+            break;
+          case 'red':
+            newValue = 0;
+            showMessage(cell, 'Você zerou!');
+            removeNumberFromSelection(cell);
+            break;
+          case 'black':
+            newValue = currentValue + 10;
+            showMessage(cell, '+10!');
+            blackColorApplied = true;
+            break;
+        }
+
+        cell.querySelector('.corner-value').textContent = newValue;
+        cell.dataset.value = newValue;
+
+        if (newValue >= 25) {
+          showMessage(cell, 'Maior valor!');
+        }
+      }
+    });
+
+    blackColorApplied = true;
+  }
+
+  function showMessage(cell, message) {
+    const messageDiv = document.createElement('div');
+    messageDiv.className = 'message';
+    messageDiv.textContent = message;
+    cell.appendChild(messageDiv);
+  }
+
+  function removeNumberFromSelection(cell) {
+    const number = cell.dataset.number;
+    if (selectedNumbers.includes(number)) {
+      selectedNumbers = selectedNumbers.filter(n => n !== number);
+      document.querySelector(`td[data-number="${number}"]`)?.classList.remove('selected');
+      updateSelectedNumbers();
+    }
+  }
+
+  function updateRoundCounter() {
+    document.getElementById('round-counter').textContent = `Rodada: ${currentRound}`;
+  }
+
+  function startRounds() {
+    document.getElementById('form-container').style.display = 'none';
+    document.querySelector('table').style.display = 'table';
+    document.getElementById('round-counter').style.display = 'block';
+
+    const intervalId = setInterval(() => {
+      if (currentRound <= totalRounds) {
+        applyColors();
+        updateRoundCounter();
+        currentRound++;
+      } else {
+        clearInterval(intervalId);
+        document.getElementById('round-counter').textContent = 'Rodadas concluídas!';
+        determineWinner();
+      }
+    }, interval);
+  }
+
+  function determineWinner() {
+    const cells = Array.from(document.querySelectorAll('td'));
+    let highestValue = -1;
+    let winnerNumber = null;
+
+    cells.forEach(cell => {
+      if (selectedNumbers.includes(cell.dataset.number)) {
+        const value = parseInt(cell.dataset.value, 10);
+        if (value > highestValue) {
+          highestValue = value;
+          winnerNumber = cell.dataset.number;
+        }
+      }
+    });
+
+    if (winnerNumber) {
+      alert(`O vencedor é o número ${winnerNumber} com o valor ${highestValue}`);
+    } else {
+      alert('Nenhum número selecionado foi o vencedor.');
+    }
+  }
+
+  function updateSelectedNumbers() {
+    const selectedList = document.getElementById('selected-list');
+    selectedList.textContent = selectedNumbers.length > 0 ? selectedNumbers.join(', ') : 'Nenhum';
+  }
+
+  document.querySelector('tbody').addEventListener('click', (event) => {
+    if (event.target.tagName === 'TD') {
+      const cell = event.target;
+      const number = cell.dataset.number;
+
+      if (cell.classList.contains('selected')) {
+        cell.classList.remove('selected');
+        selectedNumbers = selectedNumbers.filter(n => n !== number);
+      } else {
+        if (selectedNumbers.length < 3) {
+          cell.classList.add('selected');
+          selectedNumbers.push(number);
+        } else {
+          alert('Você já selecionou 3 números.');
+        }
+      }
+
+      updateSelectedNumbers();
+    }
+  });
+
+  document.getElementById('start-button').addEventListener('click', () => {
+    playerName = document.getElementById('player-name').value.trim();
+    if (playerName === '') {
+      alert('Por favor, insira seu nome.');
+      return;
+    }
+    if (selectedNumbers.length !== 3) {
+      alert('Por favor, selecione exatamente 3 números.');
+      return;
+    }
+    startRounds();
+  });
+</script>
+</body>
+</html><!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tabela 5x5</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: #1c1c1c;
+            color: #e0e0e0;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+        }
+
+        #form-container {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .input-group {
+            margin-bottom: 15px;
+        }
+
+        .input-group label {
+            font-size: 18px;
+            color: #e0e0e0;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .input-group input, .input-group button {
+            padding: 12px;
+            font-size: 16px;
+            border-radius: 5px;
+            border: none;
+            width: 220px;
+            margin: 5px;
+        }
+
+        .input-group input {
+            background-color: #333;
+            color: #e0e0e0;
+        }
+
+        .input-group input:focus {
+            background-color: #444;
+            outline: none;
+        }
+
+        .input-group button {
+            background-color: #e74c3c;
+            color: #fff;
+            cursor: pointer;
+        }
+
+        .input-group button:hover {
+            background-color: #c0392b;
+        }
+
+        .input-group button:active {
+            background-color: #e74c3c;
+        }
+
+        #selected-numbers {
+            margin-top: 20px;
+            font-size: 18px;
+            color: #e0e0e0;
+            text-align: center;
+        }
+
+        table {
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: #333;
+            border-radius: 10px;
+            box-shadow: 0 6px 12px rgba(0,0,0,0.5);
+            width: 500px;
+            table-layout: fixed;
+        }
+
+        td {
+            border: 1px solid #444;
+            width: 20%;
+            height: 80px;
+            text-align: center;
+            vertical-align: middle;
+            cursor: pointer;
+            position: relative;
+            background-color: #2c3e50;
+            transition: background-color 0.3s, color 0.3s;
+            border-radius: 8px;
+        }
+
+        td.selected {
+            border: 2px solid gold;
+        }
+
+        td.green {
+            background-color: #27ae60 !important;
+        }
+
+        td.blue {
+            background-color: #2980b9 !important;
+        }
+
+        td.orange {
+            background-color: #f39c12 !important;
+        }
+
+        td.red {
+            background-color: #c0392b !important;
+        }
+
+        td.black {
+            background-color: #34495e !important;
+            color: #ecf0f1 !important;
+        }
+
+        .corner-value {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            font-size: 16px;
+            background-color: #000;
+            color: #e0e0e0;
+            padding: 4px 8px;
+            border-radius: 5px;
+            box-shadow: 0 0 5px rgba(0,0,0,0.5);
+        }
+
+        .message {
+            font-size: 14px;
+            background-color: #000;
+            color: #e0e0e0;
+            position: absolute;
+            bottom: 5px;
+            right: 5px;
+            padding: 4px 8px;
+            border-radius: 5px;
+            box-shadow: 0 0 5px rgba(0,0,0,0.5);
+        }
+
+        #round-counter {
+            margin-top: 20px;
+            font-size: 22px;
+            font-weight: bold;
+            color: #e0e0e0;
+            text-align: center;
+        }
+
+        @media (max-width: 600px) {
+            table, td {
+                width: 100%;
+                height: 60px;
+            }
+
+            .input-group input, .input-group button {
+                font-size: 14px;
+                padding: 10px;
+                width: 180px;
+            }
+
+            #selected-numbers {
+                font-size: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="form-container">
+        <div class="input-group">
+            <label for="player-name">Nome:</label>
+            <input type="text" id="player-name" placeholder="Digite seu nome" required>
+        </div>
+        <button id="start-button">Iniciar Rodadas</button>
+    </div>
+
+    <div id="selected-numbers">Números Selecionados: <span id="selected-list">Nenhum</span></div>
+
+    <table>
+        <tbody>
+            <!-- Linhas da tabela serão geradas pelo JavaScript -->
+        </tbody>
+    </table>
+
+    <div id="round-counter">Rodada: 1</div>
+
+    <script>
+  // Função para criar e atualizar a tabela 5x5
+  function initializeTable() {
+    const tableBody = document.querySelector('tbody');
+    let number = 1;
+
+    for (let i = 0; i < 5; i++) {
+      const row = document.createElement('tr');
+      for (let j = 0; j < 5; j++) {
+        const cell = document.createElement('td');
+        cell.innerHTML = `${number}<div class="corner-value">0</div>`;
+        cell.dataset.number = number;
+        cell.dataset.value = 0; // Inicializa o valor da célula
+        row.appendChild(cell);
+        number++;
+      }
+      tableBody.appendChild(row);
+    }
+  }
+
+  initializeTable();
+
+  let selectedNumbers = [];
+  const totalRounds = 10;
+  let currentRound = 1;
+  let playerName = '';
+  let blackColorApplied = false;
+  const interval = 5000; // 5 segundos
+
+  function getRandomIndexes(count, max) {
+    const indexes = [];
+    while (indexes.length < count) {
+      const rand = Math.floor(Math.random() * max);
+      if (!indexes.includes(rand)) indexes.push(rand);
+    }
+    return indexes;
+  }
+
+  function applyColors() {
+    const cells = Array.from(document.querySelectorAll('td'));
+    const totalCells = cells.length;
+    const cellsToColor = 14;
+
+    const colorCounts = {
+      green: 2,
+      blue: 3,
+      orange: 4,
+      red: 5,
+      black: blackColorApplied ? 0 : 1
+    };
+
+    const shuffledIndexes = getRandomIndexes(cellsToColor, totalCells);
+
+    // Limpar cores e mensagens
+    cells.forEach(cell => {
+      cell.classList.remove('green', 'blue', 'orange', 'red', 'black');
+      const messageDiv = cell.querySelector('.message');
+      if (messageDiv) {
+        messageDiv.remove();
+      }
+    });
+
+    let index = 0;
+    Object.entries(colorCounts).forEach(([color, count]) => {
+      for (let i = 0; i < count; i++) {
+        if (index >= shuffledIndexes.length) return;
+        const cell = cells[shuffledIndexes[index++]];
+        cell.classList.add(color);
+
+        let currentValue = parseInt(cell.dataset.value, 10);
+        let newValue;
+
+        switch (color) {
+          case 'green':
+            newValue = currentValue + 3;
+            break;
+          case 'blue':
+            newValue = currentValue + 2;
+            break;
+          case 'orange':
+            newValue = currentValue + 1;
+            break;
+          case 'red':
+            newValue = 0;
+            showMessage(cell, 'Você zerou!');
+            removeNumberFromSelection(cell);
+            break;
+          case 'black':
+            newValue = currentValue + 10;
+            showMessage(cell, '+10!');
+            blackColorApplied = true;
+            break;
+        }
+
+        cell.querySelector('.corner-value').textContent = newValue;
+        cell.dataset.value = newValue;
+
+        if (newValue >= 25) {
+          showMessage(cell, 'Maior valor!');
+        }
+      }
+    });
+
+    blackColorApplied = true;
+  }
+
+  function showMessage(cell, message) {
+    const messageDiv = document.createElement('div');
+    messageDiv.className = 'message';
+    messageDiv.textContent = message;
+    cell.appendChild(messageDiv);
+  }
+
+  function removeNumberFromSelection(cell) {
+    const number = cell.dataset.number;
+    if (selectedNumbers.includes(number)) {
+      selectedNumbers = selectedNumbers.filter(n => n !== number);
+      document.querySelector(`td[data-number="${number}"]`)?.classList.remove('selected');
+      updateSelectedNumbers();
+    }
+  }
+
+  function updateRoundCounter() {
+    document.getElementById('round-counter').textContent = `Rodada: ${currentRound}`;
+  }
+
+  function startRounds() {
+    document.getElementById('form-container').style.display = 'none';
+    document.querySelector('table').style.display = 'table';
+    document.getElementById('round-counter').style.display = 'block';
+
+    const intervalId = setInterval(() => {
+      if (currentRound <= totalRounds) {
+        applyColors();
+        updateRoundCounter();
+        currentRound++;
+      } else {
+        clearInterval(intervalId);
+        document.getElementById('round-counter').textContent = 'Rodadas concluídas!';
+        determineWinner();
+      }
+    }, interval);
+  }
+
+  function determineWinner() {
+    const cells = Array.from(document.querySelectorAll('td'));
+    let highestValue = -1;
+    let winnerNumber = null;
+
+    cells.forEach(cell => {
+      if (selectedNumbers.includes(cell.dataset.number)) {
+        const value = parseInt(cell.dataset.value, 10);
+        if (value > highestValue) {
+          highestValue = value;
+          winnerNumber = cell.dataset.number;
+        }
+      }
+    });
+
+    if (winnerNumber) {
+      alert(`O vencedor é o número ${winnerNumber} com o valor ${highestValue}`);
+    } else {
+      alert('Nenhum número selecionado foi o vencedor.');
+    }
+  }
+
+  function updateSelectedNumbers() {
+    const selectedList = document.getElementById('selected-list');
+    selectedList.textContent = selectedNumbers.length > 0 ? selectedNumbers.join(', ') : 'Nenhum';
+  }
+
+  document.querySelector('tbody').addEventListener('click', (event) => {
+    if (event.target.tagName === 'TD') {
+      const cell = event.target;
+      const number = cell.dataset.number;
+
+      if (cell.classList.contains('selected')) {
+        cell.classList.remove('selected');
+        selectedNumbers = selectedNumbers.filter(n => n !== number);
+      } else {
+        if (selectedNumbers.length < 3) {
+          cell.classList.add('selected');
+          selectedNumbers.push(number);
+        } else {
+          alert('Você já selecionou 3 números.');
+        }
+      }
+
+      updateSelectedNumbers();
+    }
+  });
+
+  document.getElementById('start-button').addEventListener('click', () => {
+    playerName = document.getElementById('player-name').value.trim();
+    if (playerName === '') {
+      alert('Por favor, insira seu nome.');
+      return;
+    }
+    if (selectedNumbers.length !== 3) {
+      alert('Por favor, selecione exatamente 3 números.');
+      return;
+    }
+    startRounds();
+  });
+</script>
+</body>
+  </html><!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tabela 5x5</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: #1c1c1c;
+            color: #e0e0e0;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+        }
+
+        #form-container {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .input-group {
+            margin-bottom: 15px;
+        }
+
+        .input-group label {
+            font-size: 18px;
+            color: #e0e0e0;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .input-group input, .input-group button {
+            padding: 12px;
+            font-size: 16px;
+            border-radius: 5px;
+            border: none;
+            width: 220px;
+            margin: 5px;
+        }
+
+        .input-group input {
+            background-color: #333;
+            color: #e0e0e0;
+        }
+
+        .input-group input:focus {
+            background-color: #444;
+            outline: none;
+        }
+
+        .input-group button {
+            background-color: #e74c3c;
+            color: #fff;
+            cursor: pointer;
+        }
+
+        .input-group button:hover {
+            background-color: #c0392b;
+        }
+
+        .input-group button:active {
+            background-color: #e74c3c;
+        }
+
+        #selected-numbers {
+            margin-top: 20px;
+            font-size: 18px;
+            color: #e0e0e0;
+            text-align: center;
+        }
+
+        table {
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: #333;
+            border-radius: 10px;
+            box-shadow: 0 6px 12px rgba(0,0,0,0.5);
+            width: 500px;
+            table-layout: fixed;
+        }
+
+        td {
+            border: 1px solid #444;
+            width: 20%;
+            height: 80px;
+            text-align: center;
+            vertical-align: middle;
+            cursor: pointer;
+            position: relative;
+            background-color: #2c3e50;
+            transition: background-color 0.3s, color 0.3s;
+            border-radius: 8px;
+        }
+
+        td.selected {
+            border: 2px solid gold;
+        }
+
+        td.green {
+            background-color: #27ae60 !important;
+        }
+
+        td.blue {
+            background-color: #2980b9 !important;
+        }
+
+        td.orange {
+            background-color: #f39c12 !important;
+        }
+
+        td.red {
+            background-color: #c0392b !important;
+        }
+
+        td.black {
+            background-color: #34495e !important;
+            color: #ecf0f1 !important;
+        }
+
+        .corner-value {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            font-size: 16px;
+            background-color: #000;
+            color: #e0e0e0;
+            padding: 4px 8px;
+            border-radius: 5px;
+            box-shadow: 0 0 5px rgba(0,0,0,0.5);
+        }
+
+        .message {
+            font-size: 14px;
+            background-color: #000;
+            color: #e0e0e0;
+            position: absolute;
+            bottom: 5px;
+            right: 5px;
+            padding: 4px 8px;
+            border-radius: 5px;
+            box-shadow: 0 0 5px rgba(0,0,0,0.5);
+        }
+
+        #round-counter {
+            margin-top: 20px;
+            font-size: 22px;
+            font-weight: bold;
+            color: #e0e0e0;
+            text-align: center;
+        }
+
+        @media (max-width: 600px) {
+            table, td {
+                width: 100%;
+                height: 60px;
+            }
+
+            .input-group input, .input-group button {
+                font-size: 14px;
+                padding: 10px;
+                width: 180px;
+            }
+
+            #selected-numbers {
+                font-size: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="form-container">
+        <div class="input-group">
+            <label for="player-name">Nome:</label>
+            <input type="text" id="player-name" placeholder="Digite seu nome" required>
+        </div>
+        <button id="start-button">Iniciar Rodadas</button>
+    </div>
+
+    <div id="selected-numbers">Números Selecionados: <span id="selected-list">Nenhum</span></div>
+
+    <table>
+        <tbody>
+            <!-- Linhas da tabela serão geradas pelo JavaScript -->
+        </tbody>
+    </table>
+
+    <div id="round-counter">Rodada: 1</div>
+
+    <script>
+  // Função para criar e atualizar a tabela 5x5
+  function initializeTable() {
+    const tableBody = document.querySelector('tbody');
+    let number = 1;
+
+    for (let i = 0; i < 5; i++) {
+      const row = document.createElement('tr');
+      for (let j = 0; j < 5; j++) {
+        const cell = document.createElement('td');
+        cell.innerHTML = `${number}<div class="corner-value">0</div>`;
+        cell.dataset.number = number;
+        cell.dataset.value = 0; // Inicializa o valor da célula
+        row.appendChild(cell);
+        number++;
+      }
+      tableBody.appendChild(row);
+    }
+  }
+
+  initializeTable();
+
+  let selectedNumbers = [];
+  const totalRounds = 10;
+  let currentRound = 1;
+  let playerName = '';
+  let blackColorApplied = false;
+  const interval = 5000; // 5 segundos
+
+  function getRandomIndexes(count, max) {
+    const indexes = [];
+    while (indexes.length < count) {
+      const rand = Math.floor(Math.random() * max);
+      if (!indexes.includes(rand)) indexes.push(rand);
+    }
+    return indexes;
+  }
+
+  function applyColors() {
+    const cells = Array.from(document.querySelectorAll('td'));
+    const totalCells = cells.length;
+    const cellsToColor = 14;
+
+    const colorCounts = {
+      green: 2,
+      blue: 3,
+      orange: 4,
+      red: 5,
+      black: blackColorApplied ? 0 : 1
+    };
+
+    const shuffledIndexes = getRandomIndexes(cellsToColor, totalCells);
+
+    // Limpar cores e mensagens
+    cells.forEach(cell => {
+      cell.classList.remove('green', 'blue', 'orange', 'red', 'black');
+      const messageDiv = cell.querySelector('.message');
+      if (messageDiv) {
+        messageDiv.remove();
+      }
+    });
+
+    let index = 0;
+    Object.entries(colorCounts).forEach(([color, count]) => {
+      for (let i = 0; i < count; i++) {
+        if (index >= shuffledIndexes.length) return;
+        const cell = cells[shuffledIndexes[index++]];
+        cell.classList.add(color);
+
+        let currentValue = parseInt(cell.dataset.value, 10);
+        let newValue;
+
+        switch (color) {
+          case 'green':
+            newValue = currentValue + 3;
+            break;
+          case 'blue':
+            newValue = currentValue + 2;
+            break;
+          case 'orange':
+            newValue = currentValue + 1;
+            break;
+          case 'red':
+            newValue = 0;
+            showMessage(cell, 'Você zerou!');
+            removeNumberFromSelection(cell);
+            break;
+          case 'black':
+            newValue = currentValue + 10;
+            showMessage(cell, '+10!');
+            blackColorApplied = true;
+            break;
+        }
+
+        cell.querySelector('.corner-value').textContent = newValue;
+        cell.dataset.value = newValue;
+
+        if (newValue >= 25) {
+          showMessage(cell, 'Maior valor!');
+        }
+      }
+    });
+
+    blackColorApplied = true;
+  }
+
+  function showMessage(cell, message) {
+    const messageDiv = document.createElement('div');
+    messageDiv.className = 'message';
+    messageDiv.textContent = message;
+    cell.appendChild(messageDiv);
+  }
+
+  function removeNumberFromSelection(cell) {
+    const number = cell.dataset.number;
+    if (selectedNumbers.includes(number)) {
+      selectedNumbers = selectedNumbers.filter(n => n !== number);
+      document.querySelector(`td[data-number="${number}"]`)?.classList.remove('selected');
+      updateSelectedNumbers();
+    }
+  }
+
+  function updateRoundCounter() {
+    document.getElementById('round-counter').textContent = `Rodada: ${currentRound}`;
+  }
+
+  function startRounds() {
+    document.getElementById('form-container').style.display = 'none';
+    document.querySelector('table').style.display = 'table';
+    document.getElementById('round-counter').style.display = 'block';
+
+    const intervalId = setInterval(() => {
+      if (currentRound <= totalRounds) {
+        applyColors();
+        updateRoundCounter();
+        currentRound++;
+      } else {
+        clearInterval(intervalId);
+        document.getElementById('round-counter').textContent = 'Rodadas concluídas!';
+        determineWinner();
+      }
+    }, interval);
+  }
+
+  function determineWinner() {
+    const cells = Array.from(document.querySelectorAll('td'));
+    let highestValue = -1;
+    let winnerNumber = null;
+
+    cells.forEach(cell => {
+      if (selectedNumbers.includes(cell.dataset.number)) {
+        const value = parseInt(cell.dataset.value, 10);
+        if (value > highestValue) {
+          highestValue = value;
+          winnerNumber = cell.dataset.number;
+        }
+      }
+    });
+
+    if (winnerNumber) {
+      alert(`O vencedor é o número ${winnerNumber} com o valor ${highestValue}`);
+    } else {
+      alert('Nenhum número selecionado foi o vencedor.');
+    }
+  }
+
+  function updateSelectedNumbers() {
+    const selectedList = document.getElementById('selected-list');
+    selectedList.textContent = selectedNumbers.length > 0 ? selectedNumbers.join(', ') : 'Nenhum';
+  }
+
+  document.querySelector('tbody').addEventListener('click', (event) => {
+    if (event.target.tagName === 'TD') {
+      const cell = event.target;
+      const number = cell.dataset.number;
+
+      if (cell.classList.contains('selected')) {
+        cell.classList.remove('selected');
+        selectedNumbers = selectedNumbers.filter(n => n !== number);
+      } else {
+        if (selectedNumbers.length < 3) {
+          cell.classList.add('selected');
+          selectedNumbers.push(number);
+        } else {
+          alert('Você já selecionou 3 números.');
+        }
+      }
+
+      updateSelectedNumbers();
+    }
+  });
+
+  document.getElementById('start-button').addEventListener('click', () => {
+    playerName = document.getElementById('player-name').value.trim();
+    if (playerName === '') {
+      alert('Por favor, insira seu nome.');
+      return;
+    }
+    if (selectedNumbers.length !== 3) {
+      alert('Por favor, selecione exatamente 3 números.');
+      return;
+    }
+    startRounds();
+  });
+</script>
+</body>
+  </html><!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tabela 5x5</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: #1c1c1c;
+            color: #e0e0e0;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+        }
+
+        #form-container {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .input-group {
+            margin-bottom: 15px;
+        }
+
+        .input-group label {
+            font-size: 18px;
+            color: #e0e0e0;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .input-group input, .input-group button {
+            padding: 12px;
+            font-size: 16px;
+            border-radius: 5px;
+            border: none;
+            width: 220px;
+            margin: 5px;
+        }
+
+        .input-group input {
+            background-color: #333;
+            color: #e0e0e0;
+        }
+
+        .input-group input:focus {
+            background-color: #444;
+            outline: none;
+        }
+
+        .input-group button {
+            background-color: #e74c3c;
+            color: #fff;
+            cursor: pointer;
+        }
+
+        .input-group button:hover {
+            background-color: #c0392b;
+        }
+
+        .input-group button:active {
+            background-color: #e74c3c;
+        }
+
+        #selected-numbers {
+            margin-top: 20px;
+            font-size: 18px;
+            color: #e0e0e0;
+            text-align: center;
+        }
+
+        table {
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: #333;
+            border-radius: 10px;
+            box-shadow: 0 6px 12px rgba(0,0,0,0.5);
+            width: 500px;
+            table-layout: fixed;
+        }
+
+        td {
+            border: 1px solid #444;
+            width: 20%;
+            height: 80px;
+            text-align: center;
+            vertical-align: middle;
+            cursor: pointer;
+            position: relative;
+            background-color: #2c3e50;
+            transition: background-color 0.3s, color 0.3s;
+            border-radius: 8px;
+        }
+
+        td.selected {
+            border: 2px solid gold;
+        }
+
+        td.green {
+            background-color: #27ae60 !important;
+        }
+
+        td.blue {
+            background-color: #2980b9 !important;
+        }
+
+        td.orange {
+            background-color: #f39c12 !important;
+        }
+
+        td.red {
+            background-color: #c0392b !important;
+        }
+
+        td.black {
+            background-color: #34495e !important;
+            color: #ecf0f1 !important;
+        }
+
+        .corner-value {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            font-size: 16px;
+            background-color: #000;
+            color: #e0e0e0;
+            padding: 4px 8px;
+            border-radius: 5px;
+            box-shadow: 0 0 5px rgba(0,0,0,0.5);
+        }
+
+        .message {
+            font-size: 14px;
+            background-color: #000;
+            color: #e0e0e0;
+            position: absolute;
+            bottom: 5px;
+            right: 5px;
+            padding: 4px 8px;
+            border-radius: 5px;
+            box-shadow: 0 0 5px rgba(0,0,0,0.5);
+        }
+
+        #round-counter {
+            margin-top: 20px;
+            font-size: 22px;
+            font-weight: bold;
+            color: #e0e0e0;
+            text-align: center;
+        }
+
+        @media (max-width: 600px) {
+            table, td {
+                width: 100%;
+                height: 60px;
+            }
+
+            .input-group input, .input-group button {
+                font-size: 14px;
+                padding: 10px;
+                width: 180px;
+            }
+
+            #selected-numbers {
+                font-size: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="form-container">
+        <div class="input-group">
+            <label for="player-name">Nome:</label>
+            <input type="text" id="player-name" placeholder="Digite seu nome" required>
+        </div>
+        <button id="start-button">Iniciar Rodadas</button>
+    </div>
+
+    <div id="selected-numbers">Números Selecionados: <span id="selected-list">Nenhum</span></div>
+
+    <table>
+        <tbody>
+            <!-- Linhas da tabela serão geradas pelo JavaScript -->
+        </tbody>
+    </table>
+
+    <div id="round-counter">Rodada: 1</div>
+
+    <script>
+  // Função para criar e atualizar a tabela 5x5
+  function initializeTable() {
+    const tableBody = document.querySelector('tbody');
+    let number = 1;
+
+    for (let i = 0; i < 5; i++) {
+      const row = document.createElement('tr');
+      for (let j = 0; j < 5; j++) {
+        const cell = document.createElement('td');
+        cell.innerHTML = `${number}<div class="corner-value">0</div>`;
+        cell.dataset.number = number;
+        cell.dataset.value = 0; // Inicializa o valor da célula
+        row.appendChild(cell);
+        number++;
+      }
+      tableBody.appendChild(row);
+    }
+  }
+
+  initializeTable();
+
+  let selectedNumbers = [];
+  const totalRounds = 10;
+  let currentRound = 1;
+  let playerName = '';
+  let blackColorApplied = false;
+  const interval = 5000; // 5 segundos
+
+  function getRandomIndexes(count, max) {
+    const indexes = [];
+    while (indexes.length < count) {
+      const rand = Math.floor(Math.random() * max);
+      if (!indexes.includes(rand)) indexes.push(rand);
+    }
+    return indexes;
+  }
+
+  function applyColors() {
+    const cells = Array.from(document.querySelectorAll('td'));
+    const totalCells = cells.length;
+    const cellsToColor = 14;
+
+    const colorCounts = {
+      green: 2,
+      blue: 3,
+      orange: 4,
+      red: 5,
+      black: blackColorApplied ? 0 : 1
+    };
+
+    const shuffledIndexes = getRandomIndexes(cellsToColor, totalCells);
+
+    // Limpar cores e mensagens
+    cells.forEach(cell => {
+      cell.classList.remove('green', 'blue', 'orange', 'red', 'black');
+      const messageDiv = cell.querySelector('.message');
+      if (messageDiv) {
+        messageDiv.remove();
+      }
+    });
+
+    let index = 0;
+    Object.entries(colorCounts).forEach(([color, count]) => {
+      for (let i = 0; i < count; i++) {
+        if (index >= shuffledIndexes.length) return;
+        const cell = cells[shuffledIndexes[index++]];
+        cell.classList.add(color);
+
+        let currentValue = parseInt(cell.dataset.value, 10);
+        let newValue;
+
+        switch (color) {
+          case 'green':
+            newValue = currentValue + 3;
+            break;
+          case 'blue':
+            newValue = currentValue + 2;
+            break;
+          case 'orange':
+            newValue = currentValue + 1;
+            break;
+          case 'red':
+            newValue = 0;
+            showMessage(cell, 'Você zerou!');
+            removeNumberFromSelection(cell);
+            break;
+          case 'black':
+            newValue = currentValue + 10;
+            showMessage(cell, '+10!');
+            blackColorApplied = true;
+            break;
+        }
+
+        cell.querySelector('.corner-value').textContent = newValue;
+        cell.dataset.value = newValue;
+
+        if (newValue >= 25) {
+          showMessage(cell, 'Maior valor!');
+        }
+      }
+    });
+
+    blackColorApplied = true;
+  }
+
+  function showMessage(cell, message) {
+    const messageDiv = document.createElement('div');
+    messageDiv.className = 'message';
+    messageDiv.textContent = message;
+    cell.appendChild(messageDiv);
+  }
+
+  function removeNumberFromSelection(cell) {
+    const number = cell.dataset.number;
+    if (selectedNumbers.includes(number)) {
+      selectedNumbers = selectedNumbers.filter(n => n !== number);
+      document.querySelector(`td[data-number="${number}"]`)?.classList.remove('selected');
+      updateSelectedNumbers();
+    }
+  }
+
+  function updateRoundCounter() {
+    document.getElementById('round-counter').textContent = `Rodada: ${currentRound}`;
+  }
+
+  function startRounds() {
+    document.getElementById('form-container').style.display = 'none';
+    document.querySelector('table').style.display = 'table';
+    document.getElementById('round-counter').style.display = 'block';
+
+    const intervalId = setInterval(() => {
+      if (currentRound <= totalRounds) {
+        applyColors();
+        updateRoundCounter();
+        currentRound++;
+      } else {
+        clearInterval(intervalId);
+        document.getElementById('round-counter').textContent = 'Rodadas concluídas!';
+        determineWinner();
+      }
+    }, interval);
+  }
+
+  function determineWinner() {
+    const cells = Array.from(document.querySelectorAll('td'));
+    let highestValue = -1;
+    let winnerNumber = null;
+
+    cells.forEach(cell => {
+      if (selectedNumbers.includes(cell.dataset.number)) {
+        const value = parseInt(cell.dataset.value, 10);
+        if (value > highestValue) {
+          highestValue = value;
+          winnerNumber = cell.dataset.number;
+        }
+      }
+    });
+
+    if (winnerNumber) {
+      alert(`O vencedor é o número ${winnerNumber} com o valor ${highestValue}`);
+    } else {
+      alert('Nenhum número selecionado foi o vencedor.');
+    }
+  }
+
+  function updateSelectedNumbers() {
+    const selectedList = document.getElementById('selected-list');
+    selectedList.textContent = selectedNumbers.length > 0 ? selectedNumbers.join(', ') : 'Nenhum';
+  }
+
+  document.querySelector('tbody').addEventListener('click', (event) => {
+    if (event.target.tagName === 'TD') {
+      const cell = event.target;
+      const number = cell.dataset.number;
+
+      if (cell.classList.contains('selected')) {
+        cell.classList.remove('selected');
+        selectedNumbers = selectedNumbers.filter(n => n !== number);
+      } else {
+        if (selectedNumbers.length < 3) {
+          cell.classList.add('selected');
+          selectedNumbers.push(number);
+        } else {
+          alert('Você já selecionou 3 números.');
+        }
+      }
+
+      updateSelectedNumbers();
+    }
+  });
+
+  document.getElementById('start-button').addEventListener('click', () => {
+    playerName = document.getElementById('player-name').value.trim();
+    if (playerName === '') {
+      alert('Por favor, insira seu nome.');
+      return;
+    }
+    if (selectedNumbers.length !== 3) {
+      alert('Por favor, selecione exatamente 3 números.');
+      return;
+    }
+    startRounds();
+  });
+</script>
+</body>
+  </html>
